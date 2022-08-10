@@ -13,38 +13,41 @@ declare module 'pinia' {
 interface BaseProps {
   storage?: Storage;
 }
-type DefaultProps = 
-| {
-  useCrypt?: false;
-  encrypt?: (data: string) => string;
-  decrypt?: (secretData: any) => string;
-}
-| {
-  useCrypt: true,
-  encrypt: (data: string) => string,
-  decrypt: (secretData: string) => string
-}
+type DefaultProps =
+  | {
+      useCrypt?: false;
+      encrypt?: (data: string) => string;
+      decrypt?: (secretData: any) => string;
+    }
+  | {
+      useCrypt: true;
+      encrypt: (data: string) => string;
+      decrypt: (secretData: string) => string;
+    };
 export type PersistProps = {
   name?: string;
   keys?: string[];
-} & BaseProps & DefaultProps
-const STORAGE = window.sessionStorage
+} & BaseProps &
+  DefaultProps;
+
+const STORAGE = window.sessionStorage;
 
 const defaultProps: BaseProps & DefaultProps = {
   storage: STORAGE,
   useCrypt: false
-}
+};
 
 type PiniaStore = PiniaPluginContext['store'];
 
-const isString = (data: any) => Object.prototype.toString.call(data) === '[object String]'
-const isFunc = (data: any) => Object.prototype.toString.call(data) === '[object Function]'
+const isString = (data: any) => Object.prototype.toString.call(data) === '[object String]';
+const isFunc = (data: any) => Object.prototype.toString.call(data) === '[object Function]';
 const getState = (key: string, strategy: PersistProps) => {
   const storage = strategy.storage || defaultProps.storage || STORAGE;
-  const decrypt = strategy.decrypt || defaultProps.decrypt
+  const decrypt = strategy.decrypt || defaultProps.decrypt;
+  const useCrypt = strategy.useCrypt || defaultProps.useCrypt;
   let value = storage.getItem(key);
 
-  if (value && decrypt && strategy.useCrypt && isFunc(decrypt)) {
+  if (useCrypt && value && decrypt && isFunc(decrypt)) {
     value = decrypt(value);
   }
   try {
@@ -65,7 +68,8 @@ const setState = (strategy: PersistProps, states: StateTree, store: PiniaStore) 
   const keys = strategy.keys || [];
   const storageKey = strategy.name || store.$id;
   const storage = strategy.storage || defaultProps.storage || STORAGE;
-  const encrypt = strategy.encrypt || defaultProps.encrypt
+  const encrypt = strategy.encrypt || defaultProps.encrypt;
+  const useCrypt = strategy.useCrypt || defaultProps.useCrypt;
   let storeData: any = states;
 
   if (keys.length) {
@@ -78,7 +82,7 @@ const setState = (strategy: PersistProps, states: StateTree, store: PiniaStore) 
 
   storeData = JSON.stringify(storeData);
 
-  if (encrypt && (defaultProps.useCrypt || strategy.useCrypt) && isFunc(encrypt)) {
+  if (useCrypt && encrypt && isFunc(encrypt)) {
     storeData = encrypt(storeData);
   }
 
@@ -114,7 +118,7 @@ export const createPersist = ({ options, store }: PiniaPluginContext): void => {
   });
 };
 
-export const persist = (options?: BaseProps & DefaultProps): (options: PiniaPluginContext) => void => {
-  Object.assign(defaultProps, options)
-  return createPersist
-}
+export const persist = (options?: BaseProps & DefaultProps): ((options: PiniaPluginContext) => void) => {
+  Object.assign(defaultProps, options);
+  return createPersist;
+};
