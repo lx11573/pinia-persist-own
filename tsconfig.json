@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "suppressExcessPropertyErrors": true,
+    // 开启类型定义文件生成的开关
+    "noEmit": false,
+    "declaration": true,
+    // 类型定义文件生成的目标目录
+    "outDir": "dist",
+    // 只emit类型定义文件，而不emit其他诸如source-map等
+    "emitDeclarationOnly": true,
+  },
+  "include": [
+    "src"
+  ]
+}
