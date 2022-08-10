@@ -16,12 +16,12 @@ interface BaseProps {
 type DefaultProps = 
 | {
   useCrypt?: false;
-  encrypt?: (data: any) => void;
+  encrypt?: (data: string) => string;
   decrypt?: (secretData: any) => string;
 }
 | {
   useCrypt: true,
-  encrypt: (data: any) => void,
+  encrypt: (data: string) => string,
   decrypt: (secretData: string) => string
 }
 export type PersistProps = {
