@@ -11,6 +11,10 @@
   "main": "dist/main.umd.js",
   "module": "dist/main.es.js",
   "typings": "dist/main.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lx11573/pinia-persist-own.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
