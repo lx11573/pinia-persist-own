@@ -1,6 +1,6 @@
 {
   "name": "pinia-persist-own",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "pinia 持久化插件, 可加密",
   "author": "lyu",
   "type": "module",
