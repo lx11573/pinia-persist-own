@@ -78,9 +78,9 @@ interface PersistProps{
 	// 是否使用加密进行存储
 	useCrypt?: false;
 	// 加密方法
-	encrypt?: (data: any) => void;
+	encrypt?: (data: string) => string;
 	// 解密方法
-	decrypt?: (secretData: any) => string;
+	decrypt?: (secretData: string) => string;
 }
 
 const useStore = defineStore('default-store', {
