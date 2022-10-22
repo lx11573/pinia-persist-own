@@ -1,6 +1,6 @@
 {
   "name": "pinia-persist-own",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "pinia 持久化插件, 可加密",
   "author": "lyu",
   "type": "module",
@@ -10,6 +10,12 @@
   ],
   "main": "dist/main.umd.js",
   "module": "dist/main.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/main.es.js",
+      "require": "./dist/main.umd.js"
+    }
+  },
   "typings": "dist/main.d.ts",
   "repository": {
     "type": "git",
