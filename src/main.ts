@@ -27,8 +27,7 @@ type DefaultProps =
 export type PersistProps = {
   name?: string;
   keys?: string[];
-} & BaseProps &
-  DefaultProps;
+} & BaseProps & DefaultProps;
 
 const STORAGE = window.sessionStorage;
 
@@ -56,7 +55,7 @@ const getState = (key: string, strategy: PersistProps) => {
     }
     return undefined;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
   return undefined;
 };
@@ -112,6 +111,7 @@ export const createPersist = ({ options, store }: PiniaPluginContext): void => {
     }
   });
   store.$subscribe((_: any, states: StateTree) => {
+    debugger
     strategies.forEach(strategy => {
       setState(strategy, states, store);
     });
