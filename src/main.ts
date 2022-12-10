@@ -10,10 +10,10 @@ declare module 'pinia' {
     persist?: PersistProps[] | boolean;
   }
 }
-interface BaseProps {
+interface StorageProps {
   storage?: Storage;
 }
-type DefaultProps =
+type CryptProps =
   | {
       useCrypt?: false;
       encrypt?: (data: string) => string;
@@ -27,11 +27,11 @@ type DefaultProps =
 export type PersistProps = {
   name?: string;
   keys?: string[];
-} & BaseProps & DefaultProps;
+} & StorageProps & CryptProps;
 
 const STORAGE = window.sessionStorage;
 
-const defaultProps: BaseProps & DefaultProps = {
+const defaultProps: StorageProps & CryptProps = {
   storage: STORAGE,
   useCrypt: false
 };
@@ -57,7 +57,6 @@ const getState = (key: string, strategy: PersistProps) => {
   } catch (err) {
     throw err;
   }
-  return undefined;
 };
 
 /**
@@ -111,14 +110,13 @@ export const createPersist = ({ options, store }: PiniaPluginContext): void => {
     }
   });
   store.$subscribe((_: any, states: StateTree) => {
-    debugger
     strategies.forEach(strategy => {
       setState(strategy, states, store);
     });
   });
 };
 
-export const persist = (options?: BaseProps & DefaultProps): ((options: PiniaPluginContext) => void) => {
+export const persist = (options?: StorageProps & CryptProps): ((options: PiniaPluginContext) => void) => {
   Object.assign(defaultProps, options);
   return createPersist;
 };
