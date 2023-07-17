@@ -16,8 +16,8 @@ interface StorageProps {
 type CryptProps =
   | {
       useCrypt?: false;
-      encrypt?: (data: string) => string;
-      decrypt?: (secretData: any) => string;
+      encrypt?: never;
+      decrypt?: never;
     }
   | {
       useCrypt: true;
@@ -94,8 +94,7 @@ export const createPersist = ({ options, store }: PiniaPluginContext): void => {
   if (!Array.isArray(persist)) {
     persist = [
       {
-        name: store.$id,
-        storage: sessionStorage
+        name: store.$id
       }
     ];
   }
