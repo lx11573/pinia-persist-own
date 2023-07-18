@@ -7,7 +7,7 @@ import type { PiniaPluginContext, StateTree } from 'pinia';
 declare module 'pinia' {
   // eslint-disable-next-line no-unused-vars
   export interface DefineStoreOptionsBase<S extends StateTree, Store> {
-    persist?: PersistProps[] | boolean;
+    persist?: PersistProps<keyof S>[] | boolean;
   }
 }
 interface StorageProps {
@@ -24,9 +24,9 @@ type CryptProps =
       encrypt: (data: string) => string;
       decrypt: (secretData: string) => string;
     };
-export type PersistProps = {
+export type PersistProps<T = any> = {
   name?: string;
-  keys?: string[];
+  keys?: T[];
 } & StorageProps & CryptProps;
 
 const STORAGE = window.sessionStorage;
